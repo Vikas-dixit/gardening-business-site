@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: gardening-backend
+    runtime: docker
+    rootDir: backend
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        value: sqlite:///./data/app.db
+      - key: FRONTEND_URL
+        sync: false

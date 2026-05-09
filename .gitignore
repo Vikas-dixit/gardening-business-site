@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+dist/
+build/
+coverage/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.env
+backend/data/app.db
