@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 
 from app import crud, models, schemas
 from app.db import Base, engine, get_db
+from scripts.seed import run_seed
 
 Base.metadata.create_all(bind=engine)
 
@@ -25,6 +26,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.on_event("startup")
+def seed_on_startup():
+    run_seed()
 
 
 @app.get("/health")
