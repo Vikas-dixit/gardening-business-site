@@ -79,14 +79,6 @@ def create_cod_order(payload: schemas.OrderCreate, db: Session = Depends(get_db)
         raise HTTPException(status_code=400, detail=str(error)) from error
 
 
-@app.get("/orders/{order_id}", response_model=schemas.OrderOut)
-def get_order(order_id: int, db: Session = Depends(get_db)):
-    order = crud.get_order_by_id(db, order_id)
-    if not order:
-        raise HTTPException(status_code=404, detail="Order not found")
-    return order
-
-
 @app.get("/orders/search", response_model=list[schemas.OrderOut])
 def search_orders(
     email: str | None = Query(default=None),
@@ -96,3 +88,11 @@ def search_orders(
     if not email and not phone:
         raise HTTPException(status_code=400, detail="email or phone is required")
     return crud.search_orders(db, email=email, phone=phone)
+
+
+@app.get("/orders/{order_id}", response_model=schemas.OrderOut)
+def get_order(order_id: int, db: Session = Depends(get_db)):
+    order = crud.get_order_by_id(db, order_id)
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+    return order

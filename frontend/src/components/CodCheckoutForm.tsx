@@ -36,8 +36,12 @@ export function CodCheckoutForm() {
       setStatus(`Order #${response.id} placed successfully.`);
       event.currentTarget.reset();
       router.push(`/orders/confirmation/${response.id}`);
-    } catch {
-      setStatus("Unable to place order. Please review stock or try again.");
+    } catch (error) {
+      setStatus(
+        error instanceof Error
+          ? error.message
+          : "Unable to place order. Please review stock or try again."
+      );
     } finally {
       setSubmitting(false);
     }
